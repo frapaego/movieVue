@@ -22,13 +22,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
 	@Bean
-	public Docket postsApi() {
+	public Docket movieApi() {
 		return new Docket(DocumentationType.SWAGGER_2).groupName("public-api").apiInfo(apiInfo()).select()
-				.paths(postPaths()).build();
+				.paths(moviePaths()).build();
 	}
 
-	private Predicate<String> postPaths() {
-		return regex("/movie.*");
+	private Predicate<String> moviePaths() {
+		return regex("/api/movies.*");
 	}
 
 	private ApiInfo apiInfo() {

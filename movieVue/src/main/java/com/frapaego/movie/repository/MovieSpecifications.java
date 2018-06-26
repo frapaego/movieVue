@@ -24,8 +24,7 @@ public final class MovieSpecifications {
 		return (final Root<Movie> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) -> {
 			final List<Predicate> predicates = new ArrayList<>();
 			if (StringUtils.hasText(keyword)) {
-				predicates.add(cb.or(cb.like(root.get(Movie_.title), "%" + keyword + "%"),
-						cb.like(root.get(Movie_.rate.toString()), "%" + keyword + "%")));
+				predicates.add(cb.or(cb.like(root.get(Movie_.title), "%" + keyword + "%")));
 			}
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));

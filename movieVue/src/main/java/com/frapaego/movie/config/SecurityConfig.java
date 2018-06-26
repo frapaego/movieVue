@@ -23,15 +23,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/i18n/**", //
 				"/libs/**", //
 				"/img/**", //
-				"/webjars/**", //
+				// "/webjars/**", //
 				"/ico/**");
 	}
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/api/ping").permitAll().and().authorizeRequests().antMatchers("/api/**")
-				.authenticated().and().authorizeRequests().anyRequest().permitAll().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().httpBasic().and().csrf().disable();
+		http.authorizeRequests().antMatchers("/api/ping").permitAll().and() //
+				// .authorizeRequests().antMatchers("/api/**").authenticated().and() //
+				.authorizeRequests().anyRequest().permitAll().and() //
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() //
+				.httpBasic().and() //
+				.csrf().disable();
 	}
 
 	@Override

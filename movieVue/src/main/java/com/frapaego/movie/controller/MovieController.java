@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.frapaego.movie.Constants;
 import com.frapaego.movie.exception.InvalidRequestException;
 import com.frapaego.movie.model.MovieForm;
 import com.frapaego.movie.model.ResponseMessage;
 import com.frapaego.movie.service.MovieService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
-@RequestMapping("/movie")
+@RequestMapping(value = Constants.URI_API + Constants.URI_MOVIES)
+@Api(value = "MovieController", tags = "API Movies")
 public class MovieController {
 
 	private static final Logger log = LoggerFactory.getLogger(MovieController.class);
@@ -36,9 +43,13 @@ public class MovieController {
 	@Inject
 	private MovieService movieService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<Page<MovieForm>> list(@RequestParam(value = "q", required = false) final String keyword, //
+	@ApiOperation(value = "Obtiene el listado paginado de películas.")
+	public ResponseEntity<Page<MovieForm>> getAllMovies( //
+			@ApiParam(name = "q", value = "Valor a buscar.") //
+			@RequestParam(value = "q", required = false) final String keyword, //
+			@ApiParam(name = "page", value = "Paginación.") //
 			@PageableDefault(page = 0, size = 10, sort = "title", direction = Direction.DESC) final Pageable page) {
 
 		log.debug("get all movies of q@" + keyword + ", page@" + page);
@@ -50,9 +61,11 @@ public class MovieController {
 		return new ResponseEntity<>(movies, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getMovieById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<MovieForm> viewMovie(@PathVariable("id") final Long id) {
+	@ApiOperation(value = "Obtiene la película indicada por id.")
+	public ResponseEntity<MovieForm> getMovieById(@ApiParam(name = "id", value = "Identificador de la película.") //
+	@PathVariable("id") final Long id) {
 		log.debug("get movieinfo by id @" + id);
 
 		final MovieForm movie = movieService.findMovieById(id);
@@ -62,10 +75,11 @@ public class MovieController {
 		return new ResponseEntity<>(movie, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/createMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> newMovie(@RequestBody @Valid final MovieForm movie,
-			final BindingResult errResult) {
+	@ApiOperation(value = "Añade una nueva película.")
+	public ResponseEntity<ResponseMessage> createMovie(@ApiParam(name = "movie", value = "Película a crear.") //
+	@RequestBody @Valid final MovieForm movie, final BindingResult errResult) {
 
 		log.debug("create a new movie");
 		if (errResult.hasErrors()) {
@@ -82,9 +96,11 @@ public class MovieController {
 		return new ResponseEntity<>(ResponseMessage.success("movie.created"), headers, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteMovie/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> remove(@PathVariable("id") final Long id) {
+	@ApiOperation(value = "Elimina la película indicada por id.")
+	public ResponseEntity<ResponseMessage> deleteMovie(@ApiParam(name = "id", value = "Identificador de la película.") //
+	@PathVariable("id") final Long id) {
 		log.debug("delete movie by id @" + id);
 
 		movieService.delMovie(id);
@@ -92,10 +108,11 @@ public class MovieController {
 		return new ResponseEntity<>(ResponseMessage.success("movie.deleted"), HttpStatus.NO_CONTENT);
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> update(@RequestBody @Valid final MovieForm movie,
-			final BindingResult errResult) {
+	@ApiOperation(value = "Actualiza la película indicada.")
+	public ResponseEntity<ResponseMessage> updateMovie(@ApiParam(name = "movie", value = "Película a crear.") //
+	@RequestBody @Valid final MovieForm movie, final BindingResult errResult) {
 		log.debug("update a movie");
 		if (errResult.hasErrors()) {
 			throw new InvalidRequestException(errResult);
