@@ -25,7 +25,7 @@ An example application using VueJS/Bootstrap as frontend and Spring MVC as REST 
     git clone https://github.com/frapaego/movieVue
    ```
   
-2. And enter the root folder, run `mvn tomcat7:run` to start up an embedded tomcat7 to serve this application.
+2. And enter the root folder, run `mvn tomcat7:run-war` to start up an embedded tomcat7 to serve this application.
   
    ```
     mvn tomcat7:run

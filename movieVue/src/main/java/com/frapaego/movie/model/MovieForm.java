@@ -17,7 +17,7 @@ public class MovieForm implements Serializable {
 
 	private Float rate;
 
-	private Date releaseyear;
+	private Integer releaseyear;
 
 	private Date sendtime;
 
@@ -63,11 +63,11 @@ public class MovieForm implements Serializable {
 		this.rate = rate;
 	}
 
-	public Date getReleaseyear() {
+	public Integer getReleaseyear() {
 		return releaseyear;
 	}
 
-	public void setReleaseyear(final Date releaseyear) {
+	public void setReleaseyear(final Integer releaseyear) {
 		this.releaseyear = releaseyear;
 	}
 
@@ -95,7 +95,8 @@ public class MovieForm implements Serializable {
 	@Override
 	public String toString() {
 		final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		return "Movie{" + "id=" + id + ", title=" + title + ", rate=" + rate + ", releaseyear="
-				+ sdf.format(releaseyear) + ", sendtime=" + sdf.format(sendtime) + '}';
+		final String sendt = sendtime != null ? sdf.format(sendtime) : "";
+		return "Movie{" + "id=" + id + ", title=" + title + ", rate=" + rate + ", releaseyear=" + releaseyear
+				+ ", sendtime=" + sendt + '}';
 	}
 }

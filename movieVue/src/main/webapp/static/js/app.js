@@ -14,6 +14,11 @@ var Home = Vue.extend({
         return {
             movies:[]
         };
+    },
+    methods:{
+	    frontEndDateFormat: function(date) {
+			return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+		}
     }
 });
 
@@ -33,7 +38,7 @@ var ViewMovie = Vue.extend({
         remove:function(movie){
             if(confirm("¿Seguro que quieres eliminar este video?")) {
                 this.$http.delete("api/movies/deleteMovie/"+movie.id).then(function(response){
-                    if(response.data == "success") {
+                    if(response.data.type == "success") {
                         router.replace({path:'/'});
                     }
                 }).catch(function(ex){
@@ -56,8 +61,8 @@ var NewMovie = Vue.extend({
     },
     methods:{
         save:function(){
-            this.$http.post("api/movies/createMovie",this.movie).then(function(response){
-                if(response.data) {
+            this.$http.post("api/movies/createMovie/",JSON.stringify(this.movie)).then(function(response){
+                if(response.data.type == "success") {
                     router.replace({name:'movieView',params:{movieId:response.data.id}});
                 }
             }).catch(function(ex){
@@ -80,8 +85,8 @@ var EditMovie = Vue.extend({
     },
     methods:{
         save:function(){
-            this.$http.post("api/movies/updateMovie",this.movie).then(function(response){
-                if(response.data == "success") {
+            this.$http.post("api/movies/updateMovie/",JSON.stringify(this.movie)).then(function(response){
+                if(response.data.type == "success") {
                     router.replace({name:'movieView',params:{movieId:this.movie.id}});
                 }
             }).catch(function(ex){

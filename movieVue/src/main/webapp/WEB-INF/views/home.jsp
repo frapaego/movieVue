@@ -15,7 +15,7 @@
 <script src="static/js/vue-router.min.js"></script>
 <script src="static/js/vue-resource.min.js"></script>
 <script type="vue/template" id="tableTemplate">
-    <a v-link="{path:'/new'}" class="btn btn-success">Agregar un nuevo video</a>
+    <a v-link="{path:'/new'}" class="btn btn-success">Agregar una nueva pel´</a>
         <table class="table">
             <thead>
             <tr>
@@ -33,7 +33,7 @@
                     <td>{{movie.rate}}</td>
                     <td>{{movie.daoyan}}</td>
                     <td>{{movie.releaseyear}}</td>
-                    <td>{{movie.sendtime}}</td>
+                    <td>frontEndDateFormat({{movie.sendtime}})</td>
                 </tr>
             </template>
             </tbody>

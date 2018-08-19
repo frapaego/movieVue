@@ -35,11 +35,10 @@ public class Movie implements Serializable {
 	private Float rate;
 
 	@Column(name = "releaseyear")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date releaseyear;
+	private Integer releaseyear;
 
 	@Column(name = "sendtime")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date sendtime;
 
 	@Column(name = "created_date")
@@ -86,11 +85,11 @@ public class Movie implements Serializable {
 		this.rate = rate;
 	}
 
-	public Date getReleaseyear() {
+	public Integer getReleaseyear() {
 		return releaseyear;
 	}
 
-	public void setReleaseyear(final Date releaseyear) {
+	public void setReleaseyear(final Integer releaseyear) {
 		this.releaseyear = releaseyear;
 	}
 

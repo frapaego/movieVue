@@ -31,6 +31,11 @@
             <id>io.spring.repo.maven.release</id>
             <url>http://repo.spring.io/release/</url>
         </repository>
+        
+        <repository>
+            <id>Tomcat Plugin</id>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+        </repository>
 
         <repository>
             <id>io.spring.repo.maven.milestone</id>
@@ -573,7 +578,7 @@
                     <stopPort>8005</stopPort>
                     <stopKey>STOP</stopKey>
                     <webApp>
-                        <contextPath>/angularjs-springmvc-sample</contextPath>
+                        <contextPath>/movieVue</contextPath>
                     </webApp>
                 </configuration>
                 <executions>
@@ -622,7 +627,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/angularjs-springmvc-sample</path>
+                    <path>/movieVue</path>
                 </configuration>
             </plugin>
 
