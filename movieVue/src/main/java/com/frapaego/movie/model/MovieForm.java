@@ -11,6 +11,10 @@ public class MovieForm implements Serializable {
 
 	private String title;
 
+	private String daoyan;
+
+	private String jianjie;
+
 	private Float rate;
 
 	private Date releaseyear;
@@ -33,6 +37,22 @@ public class MovieForm implements Serializable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public String getDaoyan() {
+		return daoyan;
+	}
+
+	public void setDaoyan(final String daoyan) {
+		this.daoyan = daoyan;
+	}
+
+	public String getJianjie() {
+		return jianjie;
+	}
+
+	public void setJianjie(final String jianjie) {
+		this.jianjie = jianjie;
 	}
 
 	public Float getRate() {

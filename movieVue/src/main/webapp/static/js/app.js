@@ -6,10 +6,10 @@ Vue.http.options.emulateJSON = true;
 var Home = Vue.extend({
     template:'#tableTemplate',
     data:function(){
-        this.$http.get("movie.json").then(function(response){
+        this.$http.get("api/movies/getAllMovies.json").then(function(response){
             this.$set('movies',response.data);
-        }).catch(function(){
-            alert("获取服务器端数据错误");
+        }).catch(function(ex){
+            alert("Error al obtener los datos del lado del servidor: " + ex.message);
         });
         return {
             movies:[]
@@ -20,10 +20,10 @@ var Home = Vue.extend({
 var ViewMovie = Vue.extend({
     template:"#movieTemplate",
     data:function(){
-        this.$http.get("movie/"+this.$route.params.movieId+".json").then(function(response){
+        this.$http.get("api/movies/getMovieById/"+this.$route.params.movieId+".json").then(function(response){
             this.$set('movie',response.data);
-        }).catch(function(){
-            alert("获取服务器数据错误");
+        }).catch(function(ex){
+            alert("Error al obtener los datos：" + ex.message);
         });
         return {
             movie:{}
@@ -31,13 +31,13 @@ var ViewMovie = Vue.extend({
     },
     methods:{
         remove:function(movie){
-            if(confirm("确定要删除该影片吗")) {
-                this.$http.delete("movie/"+movie.id).then(function(response){
+            if(confirm("¿Seguro que quieres eliminar este video?")) {
+                this.$http.delete("api/movies/deleteMovie/"+movie.id).then(function(response){
                     if(response.data == "success") {
                         router.replace({path:'/'});
                     }
                 }).catch(function(ex){
-                    alert("删除数据错误:" + ex);
+                    alert("Error al eliminar los datos: " + ex.message);
                 });
             }
         },
@@ -56,12 +56,12 @@ var NewMovie = Vue.extend({
     },
     methods:{
         save:function(){
-            this.$http.post("movie/new",this.movie).then(function(response){
+            this.$http.post("api/movies/createMovie",this.movie).then(function(response){
                 if(response.data) {
                     router.replace({name:'movieView',params:{movieId:response.data.id}});
                 }
             }).catch(function(ex){
-                alert("数据保存错误" + ex);
+                alert("Error al guardar los datos: " + ex.message);
             });
         }
     }
@@ -69,10 +69,10 @@ var NewMovie = Vue.extend({
 var EditMovie = Vue.extend({
     template:"#editTemplate",
     data:function(){
-        this.$http.get("movie/"+this.$route.params.movieId+".json").then(function(response){
+        this.$http.get("api/movies/getMovieById/"+this.$route.params.movieId+".json").then(function(response){
             this.$set("movie",response.data);
         }).catch(function(ex){
-            alert("获取数据异常：" + ex);
+            alert("Error al obtener los datos：" + ex.message);
         });
         return {
             movie:{}
@@ -80,12 +80,12 @@ var EditMovie = Vue.extend({
     },
     methods:{
         save:function(){
-            this.$http.post("movie/edit",this.movie).then(function(response){
+            this.$http.post("api/movies/updateMovie",this.movie).then(function(response){
                 if(response.data == "success") {
                     router.replace({name:'movieView',params:{movieId:this.movie.id}});
                 }
             }).catch(function(ex){
-                alert("保存数据异常：" + ex);
+                alert("Error al guardar los datos：" + ex.message);
             });
         }
     }

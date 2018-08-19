@@ -15,19 +15,19 @@
 <script src="static/js/vue-router.min.js"></script>
 <script src="static/js/vue-resource.min.js"></script>
 <script type="vue/template" id="tableTemplate">
-    <a v-link="{path:'/new'}" class="btn btn-success">添加新影片</a>
+    <a v-link="{path:'/new'}" class="btn btn-success">Agregar un nuevo video</a>
         <table class="table">
             <thead>
             <tr>
-                <th>影片名称</th>
-                <th width="50">评分</th>
-                <th width="150">导演</th>
-                <th width="100">发行年份</th>
-                <th width="100">上映时间</th>
+                <th>Nombre de la película</th>
+                <th width="50">Calificación</th>
+                <th width="150">Director</th>
+                <th width="100">Año de lanzamiento</th>
+                <th width="100">Tiempo de liberación</th>
             </tr>
             </thead>
             <tbody>
-            <template v-for="movie in movies">
+            <template v-for="movie in movies.content">
                 <tr>
                     <td><a v-link="'/movie/'+movie.id">{{movie.title}}</a></td>
                     <td>{{movie.rate}}</td>
@@ -42,50 +42,50 @@
 <script type="vue/template" id="movieTemplate">
     <h3>{{movie.title}} <small>{{movie.rate}}</small></h3>
     <hr>
-    发行年份：{{movie.releaseyear}} 上映时间：{{movie.sendtime}} 导演：{{movie.daoyan}}
+    Año de lanzamiento：{{movie.releaseyear}} Tiempo de liberación：{{movie.sendtime}} Director：{{movie.daoyan}}
     <hr>
     <p>{{{movie.jianjie}}}</p>
-    <a @click="remove(movie)" class="btn btn-danger">删除</a>
-    <button class="btn btn-success" @click="edit(movie)">编辑</button>
+    <a @click="remove(movie)" class="btn btn-danger">Eliminar</a>
+    <button class="btn btn-success" @click="edit(movie)">Editar</button>
 </script>
 <script type="vue/template" id="newTemplate">
     <form>
-        <legend>添加新影片</legend>
-        <label>影片名称</label>
+        <legend>Agregar un nuevo video</legend>
+        <label>Nombre de la película</label>
         <input type="text" v-model="movie.title">
-        <label>评分</label>
+        <label>Calificación</label>
         <input type="text" v-model="movie.rate">
-        <label>导演</label>
+        <label>Director</label>
         <input type="text" v-model="movie.daoyan">
-        <label>发行年份</label>
-        <input type="text" v-model="movie.releaseyear">
-        <label>上映日期</label>
-        <input type="text" v-model="movie.sendtime">
-        <label>简介</label>
+        <label>Año de lanzamiento</label>
+        <input type="year" v-model="movie.releaseyear">
+        <label>Fecha de lanzamiento</label>
+        <input type="date" v-model="movie.sendtime">
+        <label>Introducción</label>
         <textarea v-model="movie.jianjie" style="height: 100px;width: 90%"></textarea>
         <div class="form-actions">
-            <button class="btn btn-primary" type="button" @click="save()">保存</button>
+            <button class="btn btn-primary" type="button" @click="save()">Guardar</button>
         </div>
     </form>
 </script>
 <script type="vue/template" id="editTemplate">
     <form>
-        <legend>编辑影片</legend>
+        <legend>Editando una película</legend>
         <input type="hidden" v-model="movie.id">
-        <label>影片名称</label>
+        <label>Nombre de la película</label>
         <input type="text" v-model="movie.title">
-        <label>评分</label>
+        <label>Calificación</label>
         <input type="text" v-model="movie.rate">
-        <label>导演</label>
+        <label>Director</label>
         <input type="text" v-model="movie.daoyan">
-        <label>发行年份</label>
+        <label>Año de lanzamiento</label>
         <input type="text" v-model="movie.releaseyear">
-        <label>上映日期</label>
+        <label>Fecha de lanzamiento</label>
         <input type="text" v-model="movie.sendtime">
-        <label>简介</label>
+        <label>Introducción</label>
         <textarea v-model="movie.jianjie" style="height: 100px;width: 90%"></textarea>
         <div class="form-actions">
-            <button class="btn btn-primary" type="button" @click="save()">保存</button>
+            <button class="btn btn-primary" type="button" @click="save()">Guardar</button>
         </div>
     </form>
 </script>

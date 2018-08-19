@@ -32,6 +32,7 @@ import com.frapaego.movie.service.MovieService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping(value = Constants.URI_API + Constants.URI_MOVIES)
@@ -46,6 +47,7 @@ public class MovieController {
 	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value = "Obtiene el listado paginado de películas.")
+	@ApiResponse(code = 200, message = "Listado paginado de películas")
 	public ResponseEntity<Page<MovieForm>> getAllMovies( //
 			@ApiParam(name = "q", value = "Valor a buscar.") //
 			@RequestParam(value = "q", required = false) final String keyword, //
@@ -64,6 +66,7 @@ public class MovieController {
 	@RequestMapping(value = "/getMovieById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value = "Obtiene la película indicada por id.")
+	@ApiResponse(code = 200, message = "Película indicada")
 	public ResponseEntity<MovieForm> getMovieById(@ApiParam(name = "id", value = "Identificador de la película.") //
 	@PathVariable("id") final Long id) {
 		log.debug("get movieinfo by id @" + id);
@@ -78,6 +81,7 @@ public class MovieController {
 	@RequestMapping(value = "/createMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value = "Añade una nueva película.")
+	@ApiResponse(code = 201, message = "movie.created")
 	public ResponseEntity<ResponseMessage> createMovie(@ApiParam(name = "movie", value = "Película a crear.") //
 	@RequestBody @Valid final MovieForm movie, final BindingResult errResult) {
 
@@ -99,6 +103,7 @@ public class MovieController {
 	@RequestMapping(value = "/deleteMovie/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value = "Elimina la película indicada por id.")
+	@ApiResponse(code = 202, message = "movie.deleted")
 	public ResponseEntity<ResponseMessage> deleteMovie(@ApiParam(name = "id", value = "Identificador de la película.") //
 	@PathVariable("id") final Long id) {
 		log.debug("delete movie by id @" + id);
@@ -111,6 +116,7 @@ public class MovieController {
 	@RequestMapping(value = "/updateMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ApiOperation(value = "Actualiza la película indicada.")
+	@ApiResponse(code = 200, message = "movie.updated")
 	public ResponseEntity<ResponseMessage> updateMovie(@ApiParam(name = "movie", value = "Película a crear.") //
 	@RequestBody @Valid final MovieForm movie, final BindingResult errResult) {
 		log.debug("update a movie");

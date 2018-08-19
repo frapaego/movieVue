@@ -20,13 +20,18 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frapaego.movie.Constants;
@@ -47,6 +52,8 @@ public class WebConfig extends SpringDataWebConfiguration {
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 
 		registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:META-INF/resources/");
+
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 
 		// registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:META-INF/resources/webjars/");
 	}
@@ -76,6 +83,24 @@ public class WebConfig extends SpringDataWebConfiguration {
 	public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
 		final List<HttpMessageConverter<?>> messageConverters = messageConverters();
 		converters.addAll(messageConverters);
+	}
+
+	@Bean
+	public ViewResolver viewResolver() {
+
+		final UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix("/WEB-INF/views/");
+		viewResolver.setSuffix(".jsp");
+		return viewResolver;
+	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+
+		final CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(10485760);
+		return multipartResolver;
 	}
 
 	@Bean

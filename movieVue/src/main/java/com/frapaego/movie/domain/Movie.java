@@ -25,6 +25,12 @@ public class Movie implements Serializable {
 	@Column(name = "title")
 	private String title;
 
+	@Column(name = "daoyan")
+	private String daoyan;
+
+	@Column(name = "jianjie")
+	private String jianjie;
+
 	@Column(name = "rate")
 	private Float rate;
 
@@ -54,6 +60,22 @@ public class Movie implements Serializable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public String getDaoyan() {
+		return daoyan;
+	}
+
+	public void setDaoyan(final String daoyan) {
+		this.daoyan = daoyan;
+	}
+
+	public String getJianjie() {
+		return jianjie;
+	}
+
+	public void setJianjie(final String jianjie) {
+		this.jianjie = jianjie;
 	}
 
 	public Float getRate() {
